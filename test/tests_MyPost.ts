@@ -50,11 +50,11 @@ describe('My Post list tests', function() {
         await pages.homePage.deleteArticle(gTitleArticle_2, gSummaryArticle_2);
         await pages.logout();
     });
-    it('013_Articles_PostListUI', async function() {
+    it('014_Articles_PostListUI', async function() {
         logger.info(`[Step 01] Clicking on the username link.`);
         await pages.homePage.goToUserProfile();
 
-        logger.debug(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
+        logger.debug(`-- Expected result -- Validating that all elements are displayed and all fields have valid values`);
         // First Article
         let id: string = await pages.userProfilePage.getArticleId(gTitleArticle, gSummaryArticle);
         await pages.userProfilePage.textIsAsExpected(pages.userProfilePage.getLocatorAuthorByArticleId(id), gUserName);
@@ -62,7 +62,7 @@ describe('My Post list tests', function() {
         await pages.userProfilePage.textIsAsExpected(pages.userProfilePage.getLocatorTitleByArticleId(id), gTitleArticle);
         await pages.userProfilePage.textIsAsExpected(pages.userProfilePage.getLocatorSummaryByArticleId(id), gSummaryArticle);
         await pages.userProfilePage.isVisible(pages.userProfilePage.getLocatorReadMoreByArticleId(id), 'Read more text');
-        await pages.userProfilePage.textFromParagraphsIsAsExpected(pages.userProfilePage.getLocatorTagsByArticleId(id), gTagsArticle);
+        await pages.userProfilePage.textFromParagraphsTagsIsAsExpected(pages.userProfilePage.getLocatorTagsByArticleId(id), gTagsArticle);
         // Second Article
         id = await pages.userProfilePage.getArticleId(gTitleArticle_2, gSummaryArticle_2);
         await pages.userProfilePage.textIsAsExpected(pages.userProfilePage.getLocatorAuthorByArticleId(id), gUserName);
@@ -73,16 +73,16 @@ describe('My Post list tests', function() {
         await pages.userProfilePage.isNotVisible(pages.userProfilePage.getLocatorTagsByArticleId(id), 'Tag');
     });
 
-    it('014_Articles_OpenArticleFromPostList', async function() {
+    it('015_Articles_OpenArticleFromPostList', async function() {
         logger.info(`[Step 01] Clicking on the username link.`);
         logger.info(`[Step 02] Clicking on the 'Read more' link for the previously added article.`);
         await pages.homePage.goToUserProfile();
         await pages.userProfilePage.seeArticle(gTitleArticle, gSummaryArticle);
 
-        logger.debug(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
+        logger.debug(`-- Expected result -- Validating that all elements are displayed and all fields have valid values`);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.titleArticle, gTitleArticle);
-        await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
-        await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.tagArticle, gTagsArticle);
+        await pages.articlePage.textFromParagraphsTagsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
+        await pages.articlePage.textFromParagraphsTagsIsAsExpected(pages.articlePage.locators.tagArticle, gTagsArticle);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.authorArticle, gUserName);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.dateCreationText, getCurrentTimestamp(new Date(), 'mmmm d, yyyy'));
         await pages.articlePage.isVisible(pages.articlePage.locators.editArticleButton, 'Edit Article button');

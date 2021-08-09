@@ -38,8 +38,8 @@ describe('Delete article tests', function() {
         logger.info(`Running the 'After' step.`);
         await pages.logout();
     });
-    it('012_Articles_DeletingArticle', async function() {
-        logger.info(`[Step 01] Clicking on the username link .`);
+    it('013_Articles_DeletingArticle', async function() {
+        logger.info(`[Step 01] Clicking on the username link.`);
         logger.info(`[Step 02] Clicking on the 'Read more' link for the previously added article.`);
         logger.info(`[Step 03] Clicking on the 'Delete Article' button.`);
         await pages.homePage.goToUserProfile();

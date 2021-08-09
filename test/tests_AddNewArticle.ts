@@ -63,9 +63,9 @@ describe('Add new article tests', function() {
         logger.info(`[Step 05] Clicking on the 'Publish Article' button.`);
         await pages.homePage.addNewArticle(gTitleArticle, gSummaryArticle, gContentArticle, gTagsArticle);
 
-        logger.debug(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
+        logger.debug(`-- Expected result -- Validating that all elements are displayed and all fields have valid values`);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.titleArticle, gTitleArticle);
-        await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
+        await pages.articlePage.textFromParagraphsTagsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.authorArticle, gUserName);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.dateCreationText, getCurrentTimestamp(new Date(), 'mmmm d, yyyy'));
         await pages.articlePage.isVisible(pages.articlePage.locators.editArticleButton, 'Edit Article button');

@@ -60,12 +60,12 @@ export abstract class BasePage {
     public async attributeIsAsExpected(pSelector: Locator, pAttribute: string,  pExpected: string) {
         let actual: string = await this.browser.findElement(pSelector).getAttribute(pAttribute);
         if (actual.trim() !== pExpected.trim()) {
-            let errorMessage = `The actual value atribute '${pAttribute}' was '${actual}' rather than the expected '${pExpected}'.`;
+            let errorMessage = `The actual value attribute '${pAttribute}' was '${actual}' rather than the expected '${pExpected}'.`;
             throw new Error(`[assert attributeIsAsExpected] ${errorMessage}`);
         }
     }
 
-    public async textFromParagraphsIsAsExpected(pSelector: Locator, pExpected: string[]) {
+    public async textFromParagraphsTagsIsAsExpected(pSelector: Locator, pExpected: string[]) {
         let elements: WebElement[] = await this.browser.findElements(pSelector);
         let actual: string;
         let expected: string;

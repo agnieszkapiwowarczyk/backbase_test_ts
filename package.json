@@ -1,7 +1,7 @@
 {
   "name": "backbase_test_ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tests for CRUD Articles",
   "main": "index.js",
   "scripts": {
     "tests": "mocha --require ts-node/register test/**/*.ts --timeout 600000"

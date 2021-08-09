@@ -83,10 +83,10 @@ describe('Edit article tests', function() {
         let actualId = await pages.userProfilePage.getArticleId(gTitleArticle, gSummaryArticle);
         await pages.userProfilePage.seeArticle(gTitleArticle, gSummaryArticle);
 
-        logger.debug(`-- Expected result -- Validating whether the fields are changed values`);
+        logger.debug(`-- Expected result -- Validating whether the fields have changed values`);
         pages.articlePage.isEqual(actualId, expectedId);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.titleArticle, gTitleArticle);
-        await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
+        await pages.articlePage.textFromParagraphsTagsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
         await pages.articlePage.isNotVisible(pages.articlePage.locators.tagArticle, 'Tags')
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.authorArticle, gUserName);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.dateCreationText, getCurrentTimestamp(new Date(), 'mmmm d, yyyy'));
