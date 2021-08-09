@@ -24,7 +24,7 @@ export abstract class BasePage {
             console.log(`[Navigate Error] ${e}`);
         }
     }
-    //Asserts
+
     public isEqual(pActual: string, pExpected: string){
             expect(pActual).to.equal(pExpected);
     }
