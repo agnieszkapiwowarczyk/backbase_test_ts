@@ -38,7 +38,7 @@ describe('Edit article tests', function() {
     });
     it('007_Articles_EditingArticle', async function() {
 
-        console.log(`[Step 01] Clicking on the username link .`);
+        console.log(`[Step 01] Clicking on the username link.`);
         console.log(`[Step 02] Clicking on the 'Read more' link for the previously added article.`);
         console.log(`[Step 03] Clicking on the 'Edit Article' button.`);
         await pages.homePage.goToUserProfile();
@@ -54,7 +54,7 @@ describe('Edit article tests', function() {
     });
 
     it('008_Articles_EditingAndSavingArticle', async function() {
-        console.log(`[Step 01] Clicking on the username link .`);
+        console.log(`[Step 01] Clicking on the username link.`);
         console.log(`[Step 02] Clicking on the 'Read more' link for the previously added article.`);
         console.log(`[Step 03] Clicking on the 'Edit Article' button.`);
         console.log(`[Step 04] Changing Article Title, Summary, and Content.`)
@@ -82,7 +82,7 @@ describe('Edit article tests', function() {
         pages.articlePage.isEqual(actualId, expectedId);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.titleArticle, gTitleArticle);
         await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
-        // await pages.articlePage.isNotVisible(pages.articlePage.locators.tagArticle, 'Tags')
+        await pages.articlePage.isNotVisible(pages.articlePage.locators.tagArticle, 'Tags')
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.authorArticle, gUserName);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.dateCreationText, getCurrentTimestamp(new Date(), 'mmmm d, yyyy'));
         await pages.articlePage.isVisible(pages.articlePage.locators.editArticleButton, 'Edit Article button');

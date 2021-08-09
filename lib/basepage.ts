@@ -38,7 +38,7 @@ export abstract class BasePage {
             throw new Error(`[assert isVisible] Element '${pElementName}' is not visible.`);
         }
     }
-//  TO DO: Error
+
     public async isNotVisible(pSelector: Locator, pElementName: string) {
         let isVisible: boolean;
 

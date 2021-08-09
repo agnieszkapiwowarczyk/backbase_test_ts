@@ -1,7 +1,6 @@
-import { UserProfilePage } from './userProfilePage';
 import { By, Locator } from 'selenium-webdriver';
 import { Browser, BasePage } from '../lib';
-import { EditorPage, RegisterPage, LoginPage } from '.';
+import { EditorPage, RegisterPage, LoginPage, ArticlePage, UserProfilePage } from '.';
 import config from '../config'
 
 
@@ -51,14 +50,27 @@ export class HomePage extends BasePage{
         }
     }
 
-    public async addNewArticle(pTitle: string, pDescription: string, pContent: string[], pTags: string[]) {
+    public async addNewArticle(pTitle: string, pSummary: string, pContent: string[], pTags: string[]) {
         const editorPage: EditorPage = new EditorPage(this.browser);
 
         try {
             await this.browser.findElement(this.locators.newArticleLink).click();
-            await editorPage.addArticle(pTitle, pDescription, pContent, pTags);
+            await editorPage.addArticle(pTitle, pSummary, pContent, pTags);
         } catch(e) {
             console.log(`[AddNewArticle Error] ${e}`);
+        }
+    }
+
+    public async deleteArticle(pTitle: string, pSummary: string) {
+        const userProfilePage: UserProfilePage = new UserProfilePage(this.browser);
+        const articlePage: ArticlePage = new ArticlePage(this.browser);
+
+        try {
+            await this.goToUserProfile();
+            await userProfilePage.seeArticle(pTitle, pSummary);
+            await articlePage.clickButtonDelete();
+        } catch(e) {
+            console.log(`[DeleteArticle Error] ${e}`);
         }
     }
 
@@ -69,7 +81,7 @@ export class HomePage extends BasePage{
             await this.browser.findElement(this.locators.userNameLink).click();
             await this.browser.wait(userProfilePage.locators.titleUserName);
         } catch(e) {
-            console.log(`[goToUserProfile Error] ${e}`);
+            console.log(`[GoToUserProfile Error] ${e}`);
         }
     }
 }

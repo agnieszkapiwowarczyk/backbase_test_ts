@@ -15,6 +15,29 @@ export class UserProfilePage extends BasePage {
         return By.xpath(`//a[./h1[text()='${pTitle}'] and ./p[text()='${pSummary}']]`);
     }
 
+    public getLocatorAuthorByArticleId(pIdArticle: string): Locator {
+        return By.xpath(`//a[@class = 'preview-link' and contains(@href, '${pIdArticle}')]/ancestor::div[@class='article-preview']//a[@class='author']`);
+    }
+
+    public getLocatorDateCreationByArticleId(pIdArticle: string): Locator {
+        return By.xpath(`//a[@class = 'preview-link' and contains(@href, '${pIdArticle}')]/ancestor::div[@class='article-preview']//span[@class='date']`);
+    }
+    public getLocatorTitleByArticleId(pIdArticle: string): Locator {
+        return By.xpath(`//a[@class = 'preview-link' and contains(@href, '${pIdArticle}')]/h1`);
+    }
+
+    public getLocatorSummaryByArticleId(pIdArticle: string): Locator {
+        return By.xpath(`//a[@class = 'preview-link' and contains(@href, '${pIdArticle}')]/p`);
+    }
+
+    public getLocatorReadMoreByArticleId(pIdArticle: string): Locator {
+        return By.xpath(`//a[@class = 'preview-link' and contains(@href, '${pIdArticle}')]/ancestor::div[@class='article-preview']//span[text()='Read more...']`);
+    }
+
+    public getLocatorTagsByArticleId(pIdArticle: string): Locator {
+        return By.xpath(`//a[@class = 'preview-link' and contains(@href, '${pIdArticle}')]/ancestor::div[@class='article-preview']//ul[@class='tag-list']/li`);
+    }
+
     public async getArticleId(pTitle: string, pSummary: string) {
         try {
             await this.browser.wait(this.getLocatorLinkArticle(pTitle, pSummary));
