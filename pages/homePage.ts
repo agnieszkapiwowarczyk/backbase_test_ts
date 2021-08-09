@@ -41,9 +41,10 @@ export class HomePage extends BasePage{
         const registerPage: RegisterPage = new RegisterPage(this.browser);
 
         try {
+            await this.browser.wait(this.locators.signUpLink);
             await this.browser.findElement(this.locators.signUpLink).click();
             await registerPage.signUp(pUserName, pEmail, pPassword);
-            await this.browser.wait(this.getLocatorUserNameLink(pUserName), 5000);
+            await this.browser.wait(this.getLocatorUserNameLink(pUserName));
             
         } catch(e) {
             console.log(`[Register Error] ${e}`);
