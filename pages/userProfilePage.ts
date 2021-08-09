@@ -7,17 +7,18 @@ export class UserProfilePage extends BasePage {
         super(browser);
     }
     public locators = {
-        titleUserName: By.css('div.profile-page h4')
+        titleUserName: By.css('div.profile-page h4'),
+        noArticleText: By.xpath(`//div[contains(text(),'No articles are here')]`)
     }
 
-    private getLocatorLinkArticle(pTitle: string, pDescription: string): Locator {
-        return By.xpath(`//a[./h1[text()='${pTitle}'] and ./p[text()='${pDescription}']]`);
+    public getLocatorLinkArticle(pTitle: string, pSummary: string): Locator {
+        return By.xpath(`//a[./h1[text()='${pTitle}'] and ./p[text()='${pSummary}']]`);
     }
 
-    public async getArticleId(pTitle: string, pDescription: string) {
+    public async getArticleId(pTitle: string, pSummary: string) {
         try {
-            await this.browser.wait(this.getLocatorLinkArticle(pTitle, pDescription));
-            const attribute = await this.browser.findElement(this.getLocatorLinkArticle(pTitle, pDescription))
+            await this.browser.wait(this.getLocatorLinkArticle(pTitle, pSummary));
+            const attribute = await this.browser.findElement(this.getLocatorLinkArticle(pTitle, pSummary))
             .getAttribute('href');
             const id = attribute.split('/')[4];
             return id;
@@ -27,12 +28,12 @@ export class UserProfilePage extends BasePage {
     }
 
 
-    public async seeArticle(pTitle: string, pDescription: string) {
+    public async seeArticle(pTitle: string, pSummary: string) {
         const articlePage: ArticlePage = new ArticlePage(this.browser);
 
         try {
-            await this.browser.wait(this.getLocatorLinkArticle(pTitle, pDescription));
-            await this.browser.findElement(this.getLocatorLinkArticle(pTitle, pDescription)).click();
+            await this.browser.wait(this.getLocatorLinkArticle(pTitle, pSummary));
+            await this.browser.findElement(this.getLocatorLinkArticle(pTitle, pSummary)).click();
             await this.browser.wait(articlePage.locators.titleArticle);
         } catch(e) {
             throw new Error(`[SeeArticle Error] ${e}`);

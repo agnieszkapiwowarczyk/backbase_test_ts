@@ -43,7 +43,7 @@ describe('Add new article tests', function() {
         console.log(`-- Expected result -- Validating whether the title of an article is displayed`);
         await pages.articlePage.isVisible(pages.articlePage.locators.titleArticle, 'Article title');
         
-    })
+    });
 
     it('002_Articles_AddingArticleWithParagraphs_WithoutTags', async function() {
         gTitleArticle = 'Article 2';
@@ -68,5 +68,5 @@ describe('Add new article tests', function() {
         await pages.articlePage.isVisible(pages.articlePage.locators.commentField, 'Coment field');
         await pages.articlePage.isVisible(pages.articlePage.locators.postCommentButton, 'Post Comment button');
         
-    })
+    });
 })

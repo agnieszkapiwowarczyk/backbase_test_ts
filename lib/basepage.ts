@@ -30,14 +30,21 @@ export abstract class BasePage {
     }
 
     public async isVisible(pSelector: Locator, pElementName: string) {
-        if (! await this.browser.findElement(pSelector).isDisplayed()){
+        let isVisible: boolean;
+        await this.browser.findElement(pSelector).isDisplayed()
+        .then(()=>{ isVisible = true }).catch((err=> { if(err.name=== "NoSuchElementError") isVisible = false;
+        throw new Error (" No such element")}))
+        if (!isVisible){
             throw new Error(`[assert isVisible] Element '${pElementName}' is not visible.`);
         }
     }
 //  TO DO: Error
     public async isNotVisible(pSelector: Locator, pElementName: string) {
-        let element = await this.browser.findElement(pSelector);
-        if (element){
+        let isVisible: boolean;
+
+        await this.browser.findElement(pSelector).isDisplayed()
+        .then(()=>{ isVisible = true }).catch((err=> { if(err.name=== "NoSuchElementError") isVisible = false;}))
+        if (isVisible){
             throw new Error(`[assert isNotVisible] Element '${pElementName}' is visible.`);
         }
     }
