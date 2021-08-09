@@ -13,7 +13,7 @@ export class LoginPage extends BasePage {
     }
     public async signIn(pEmail: string, pPassword: string): Promise<void> {
         try {
-            await this.browser.wait(this.locators.pageTitle, 3000);
+            await this.browser.wait(this.locators.pageTitle);
             await this.browser.findElement(this.locators.emailInput).sendKeys(pEmail);
             await this.browser.findElement(this.locators.passwordInput).sendKeys(pPassword);
             await this.browser.findElement(this.locators.signInButton).click();

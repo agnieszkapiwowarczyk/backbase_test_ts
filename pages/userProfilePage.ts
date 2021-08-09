@@ -50,7 +50,6 @@ export class UserProfilePage extends BasePage {
         }
     }
 
-
     public async seeArticle(pTitle: string, pSummary: string) {
         const articlePage: ArticlePage = new ArticlePage(this.browser);
 

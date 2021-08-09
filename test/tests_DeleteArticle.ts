@@ -20,7 +20,7 @@ describe('Delete article tests', function() {
         let timestamp = getCurrentTimestamp(new Date);
         gUserName = 'newuser' + timestamp;
         gUserEmail = 'newuser' + timestamp + '@mail.com';
-        gTitleArticle = 'Article 1';
+        gTitleArticle = 'Article_'+ timestamp;
         gSummaryArticle = 'How to create the automated tests?';
         gContentArticle = ['You have to understand the technology before choose one.'];
         gTagsArticle = ['QA', 'automated-test', 'tools'];

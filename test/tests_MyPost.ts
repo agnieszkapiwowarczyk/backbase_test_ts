@@ -20,16 +20,17 @@ let gTagsArticle_2: string[];
 
 describe('My Post list tests', function() {
     let pages: AllPages;
-    beforeEach(async function(){
+
+    beforeEach(async function() {
         let timestamp = getCurrentTimestamp(new Date);
         gUserName = 'newuser' + timestamp;
         gUserEmail = 'newuser' + timestamp + '@mail.com';
-        gTitleArticle = 'Article 1';
+        gTitleArticle = 'Article_'+ timestamp;
         gSummaryArticle = 'How to create the automated tests?';
         gContentArticle = ['You have to understand the technology before choose one.'];
         gTagsArticle = ['QA', 'automated-test', 'tools'];
 
-        gTitleArticle_2 = 'Article2';
+        gTitleArticle_2 = 'Article_'+ timestamp;
         gSummaryArticle_2 = 'Summary';
         gContentArticle_2 = ['Article Content.'];
         gTagsArticle_2 = [];
@@ -44,7 +45,7 @@ describe('My Post list tests', function() {
         await pages.homePage.addNewArticle(gTitleArticle, gSummaryArticle, gContentArticle, gTagsArticle);
         await pages.homePage.addNewArticle(gTitleArticle_2, gSummaryArticle_2, gContentArticle_2, gTagsArticle_2);
     });
-    afterEach(async function(){
+    afterEach(async function() {
         logger.info(`Running the 'After' step.`);
         await pages.homePage.deleteArticle(gTitleArticle, gSummaryArticle);
         await pages.homePage.deleteArticle(gTitleArticle_2, gSummaryArticle_2);

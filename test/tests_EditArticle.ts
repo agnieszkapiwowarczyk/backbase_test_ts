@@ -20,7 +20,7 @@ describe('Edit article tests', function() {
         let timestamp = getCurrentTimestamp(new Date);
         gUserName = 'newuser' + timestamp;
         gUserEmail = 'newuser' + timestamp + '@mail.com';
-        gTitleArticle = 'Article 1';
+        gTitleArticle = 'Article_'+ timestamp;
         gSummaryArticle = 'How to create the automated tests?';
         gContentArticle = ['You have to understand the technology before choose one.'];
         gTagsArticle = ['QA', 'automated-test', 'tools'];
@@ -94,6 +94,5 @@ describe('Edit article tests', function() {
         await pages.articlePage.isVisible(pages.articlePage.locators.deleteArticleButton, 'Delete Article button');
         await pages.articlePage.isVisible(pages.articlePage.locators.commentField, 'Coment field');
         await pages.articlePage.isVisible(pages.articlePage.locators.postCommentButton, 'Post Comment button');
-        
     });
 })
