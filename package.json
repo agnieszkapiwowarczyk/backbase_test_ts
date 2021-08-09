@@ -1,0 +1,23 @@
+{
+  "name": "backbase_test_ts",
+  "version": "1.0.0",
+  "description": "Tests for CRUD Articles",
+  "main": "index.js",
+  "scripts": {
+    "tests": "mocha --require ts-node/register test/**/*.ts --timeout 600000"
+  },
+  "keywords": [],
+  "author": "Agnieszka Piwowarczyk",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.4.13",
+    "@types/selenium-webdriver": "^4.0.15",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.3",
+    "selenium-webdriver": "^4.0.0-beta.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}
