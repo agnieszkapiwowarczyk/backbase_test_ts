@@ -9,6 +9,7 @@ export class Browser {
     private driver: ThenableWebDriver;
     constructor(private pBrowserName: DriverType) {
         this.driver = new Builder().forBrowser(pBrowserName).build();
+        this.driver.manage().window().maximize();
     }
     public  async navigate(pUrl:string): Promise<void> {
         await this.driver.get(pUrl);
