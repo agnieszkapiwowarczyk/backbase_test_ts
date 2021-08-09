@@ -1,7 +1,10 @@
 import { Browser, DriverType } from '../lib';
 import { AllPages } from '../pages';
-import { getCurrentTimestamp } from '../lib';
+import { getCurrentTimestamp, consoleHandler } from '../lib';
+import { logging } from 'selenium-webdriver';
+import config from '../config';
 
+const logger = new logging.Logger("test", config.globalLogLevel);
 let gUserName: string;
 let gUserEmail: string;
 const gPassword: string = 'Password';
@@ -32,24 +35,26 @@ describe('My Post list tests', function() {
         gTagsArticle_2 = [];
 
         pages = new AllPages(new Browser(DriverType.CHROME));
-        console.log(`[PRECONDITION] Registration as '${gUserName}' user.`);
+        logger.addHandler(consoleHandler);
+
+        logger.info(`[PRECONDITION] Registration as '${gUserName}' user.`);
         await pages.homePage.navigateTo();
         await pages.homePage.register(gUserName,gUserEmail, gPassword);
-        console.log(`[PRECONDITION] Adding articles.`);
+        logger.info(`[PRECONDITION] Adding articles.`);
         await pages.homePage.addNewArticle(gTitleArticle, gSummaryArticle, gContentArticle, gTagsArticle);
         await pages.homePage.addNewArticle(gTitleArticle_2, gSummaryArticle_2, gContentArticle_2, gTagsArticle_2);
     });
     afterEach(async function(){
-        console.log(`Running the 'After' step.`);
+        logger.info(`Running the 'After' step.`);
         await pages.homePage.deleteArticle(gTitleArticle, gSummaryArticle);
         await pages.homePage.deleteArticle(gTitleArticle_2, gSummaryArticle_2);
         await pages.logout();
     });
     it('013_Articles_PostListUI', async function() {
-        console.log(`[Step 01] Clicking on the username link.`);
+        logger.info(`[Step 01] Clicking on the username link.`);
         await pages.homePage.goToUserProfile();
 
-        console.log(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
+        logger.debug(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
         // First Article
         let id: string = await pages.userProfilePage.getArticleId(gTitleArticle, gSummaryArticle);
         await pages.userProfilePage.textIsAsExpected(pages.userProfilePage.getLocatorAuthorByArticleId(id), gUserName);
@@ -69,12 +74,12 @@ describe('My Post list tests', function() {
     });
 
     it('014_Articles_OpenArticleFromPostList', async function() {
-        console.log(`[Step 01] Clicking on the username link.`);
-        console.log(`[Step 02] Clicking on the 'Read more' link for the previously added article.`);
+        logger.info(`[Step 01] Clicking on the username link.`);
+        logger.info(`[Step 02] Clicking on the 'Read more' link for the previously added article.`);
         await pages.homePage.goToUserProfile();
         await pages.userProfilePage.seeArticle(gTitleArticle, gSummaryArticle);
 
-        console.log(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
+        logger.debug(`-- Expected result -- Validating that all elements are diplayed and all fields have valid values`);
         await pages.articlePage.textIsAsExpected(pages.articlePage.locators.titleArticle, gTitleArticle);
         await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.contentArticle, gContentArticle);
         await pages.articlePage.textFromParagraphsIsAsExpected(pages.articlePage.locators.tagArticle, gTagsArticle);

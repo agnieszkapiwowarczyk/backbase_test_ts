@@ -5,7 +5,7 @@ export const enum DriverType {
     FIREFOX = 'firefox'
 }
 
-export class Browser{
+export class Browser {
     private driver: ThenableWebDriver;
     constructor(private pBrowserName: DriverType) {
         this.driver = new Builder().forBrowser(pBrowserName).build();
