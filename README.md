@@ -1,5 +1,5 @@
 # backbase_test_ts
-How it is structured: 
+My structure: 
 
 ├── lib/
 
@@ -20,11 +20,18 @@ config.ts: General configuration and settings that are read by tests
 **************************************************************************************************************************************
 
 HOW RUN TESTS:
+* Remember - you shoud have install typescript chromedriver.
 
-1)	We can run the tests in git bash, which should be open in ‘backbase_test_ts’ folder.  
+* We can run the tests in terminal, which should be open in ‘backbase_test_ts’ folder.  
 
-2)	First, we should add ‘node-modules’ folder by adding ‘npm install’ to console 
+1)	First, we need install all required dependencies:
+```
+npm install
+```
 
-3)	We can run the tests by adding ‘npm run tests’ to console. 
+2)	Run the tests in console:
+```
+npm run tests
+```
 
-4)	Before each test a new user is created because after creating and logging out this user cannot login anymore. Originally, I wanted the user to be created in the 'before' section and in the 'before each' section to just log in. 
+Before each test a new user is created because after creating and logging out this user cannot login anymore. Originally, I wanted the user to be created in the 'before' section and in the 'before each' section to just log in. 
