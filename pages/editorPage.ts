@@ -1,46 +1,96 @@
-import { BasePage, Browser } from "../lib";
-import { By, Key, Locator} from 'selenium-webdriver';
+import { BasePage, Browser } from '../lib';
+import { By, Key, Locator } from 'selenium-webdriver';
+import { ArticlePage } from '.';
 
 export class EditorPage extends BasePage{
     constructor(browser: Browser){
         super(browser);
     }
 
-    private locators = {
-        titleInput: By.css('input[formcontrolname=title]'),
-        descriptionInput: By.css('input[formcontrolname=description]'),
-        contentTextbox: By.css('textarea[formcontrolname=body]'),
-        tagsInput: By.css('input[placeholder$=tags]'),
-        publishArticleButton: By.css('button[type=button]')
+    public locators = {
+        titleInput: By.css(`input[formcontrolname=title]`),
+        summaryInput: By.css(`input[formcontrolname=description]`),
+        contentTextbox: By.css(`textarea[formcontrolname=body]`),
+        tagsInput: By.css(`input[placeholder$=tags]`),
+        publishArticleButton: By.css(`button[type=button]`)
     }
     private getLocatorTag(pTagName: string): Locator {
-        return By.xpath(`//span/li[text()="${pTagName}"]`);
+        return By.xpath(`//span[text()=' ${pTagName} ']`);
     }
 
-    public async addArticle(pTitle: string, pDescription: string, pContent: string[], pTags: string[]) {
+    private getLocatorLinkDeleteTag(pTagName: string): Locator {
+        return By.xpath(`//span[text()=' ${pTagName} ']/i`);
+    }
+
+    public async addArticle(pTitle: string, pSummary: string, pContent: string[], pTags: string[]) {
         try {
-            let content = pContent.join(' \n \n ')
+            let content = pContent.join(' \n \n ');
             await this.browser.findElement(this.locators.titleInput).sendKeys(pTitle);
-            await this.browser.findElement(this.locators.descriptionInput).sendKeys(pDescription);
+            await this.browser.findElement(this.locators.summaryInput).sendKeys(pSummary);
             await this.browser.findElement(this.locators.contentTextbox).sendKeys(content);
             for (let tag of pTags){ 
                 await this.addTag(tag);
             }
-            await this.browser.findElement(this.locators.publishArticleButton).click();
+            await this.clickButtonPublish();
         } catch(e) {
-            console.log('AddArticle Error:', e);
-    }
+            console.log(`[AddArticle Error] ${e}`);
+        }
     }
 
     public async addTag(pTag: string): Promise<void> {
         try {
             await this.browser.findElement(this.locators.tagsInput).sendKeys(pTag);
             await this.browser.findElement(this.locators.tagsInput).sendKeys(Key.ENTER);
-            //TO DO
-            // czy moge tu dodac jakas walidacje tagow?
         } catch(e) {
-            console.log('AddTag Error:', e);
+            throw new Error(`[AddTag Error] ${e}`);
+        }
     }
+
+    public async deleteTag(pTag: string): Promise<void> {
+        try {
+            await this.browser.findElement(this.getLocatorLinkDeleteTag(pTag)).click();
+        } catch(e) {
+            throw new Error(`[DeleteTag Error] ${e}`);
+        }
+    }
+
+    public async editTitle(pTitle: string): Promise<void> {
+        try {
+            await this.browser.findElement(this.locators.titleInput).clear();
+            await this.browser.findElement(this.locators.titleInput).sendKeys(pTitle);
+        } catch(e) {
+            console.log(`[EditTitle Error] ${e}`);
+        }
+    }
+
+    public async editSummary(pSummary: string): Promise<void> {
+        try {
+            await this.browser.findElement(this.locators.summaryInput).clear();
+            await this.browser.findElement(this.locators.summaryInput).sendKeys(pSummary);
+        } catch(e) {
+            console.log(`[EditSummary Error] ${e}`);
+        }
+    }
+
+    public async editContent(pContent: string[]): Promise<void> {
+        try {
+            let content = pContent.join(' \n \n ');
+            await this.browser.findElement(this.locators.contentTextbox).clear();
+            await this.browser.findElement(this.locators.contentTextbox).sendKeys(content);
+        } catch(e) {
+            console.log(`[EditContent Error] ${e}`);
+        }
+    }
+
+    public async clickButtonPublish(): Promise<void> {
+        const articlePage: ArticlePage = new ArticlePage(this.browser);
+        
+        try {
+            await this.browser.findElement(this.locators.publishArticleButton).click();
+            await this.browser.wait(articlePage.locators.titleArticle);
+        } catch(e) {
+            console.log(`[ClickButtonPublish Error] ${e}`);
+        }
     }
 
 }

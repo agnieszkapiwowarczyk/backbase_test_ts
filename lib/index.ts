@@ -1,4 +1,3 @@
 export * from './basepage';
 export * from './browser';
-export * from './utils'
-export * from './asserts'
+export * from './utils';

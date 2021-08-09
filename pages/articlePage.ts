@@ -1,5 +1,5 @@
-import { HomePage } from '.';
-import { By} from 'selenium-webdriver';
+import { HomePage, EditorPage } from '.';
+import { By } from 'selenium-webdriver';
 import { Browser, BasePage } from '../lib';
 
 export class ArticlePage extends BasePage {
@@ -18,10 +18,25 @@ export class ArticlePage extends BasePage {
         postCommentButton: By.css('button[type=submit]')
     }
 
-    public async delete() {
+    public async clickButtonDelete() {
         const homePage: HomePage = new HomePage(this.browser);
+        
+        try {
+            await this.browser.findElement(this.locators.deleteArticleButton).click();
+            await this.browser.wait(homePage.locators.yourFeedLink);
+        } catch(e) {
+            console.log(`[ClickButtonDelete Error] ${e}`);
+        }
+    }
 
-        await this.browser.findElement(this.locators.deleteArticleButton).click();
-        await this.browser.wait(homePage.locators.yourFeedLink);
+    public async clickButtonEdit() {
+        const editorPage: EditorPage = new EditorPage(this.browser);
+        
+        try {
+            await this.browser.findElement(this.locators.editArticleButton).click();
+            await this.browser.wait(editorPage.locators.publishArticleButton);
+        } catch(e) {
+            console.log(`[ClickButtonDelete Error] ${e}`);
+        }
     }
 }

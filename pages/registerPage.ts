@@ -1,4 +1,4 @@
-import { By} from 'selenium-webdriver';
+import { By } from 'selenium-webdriver';
 import { Browser, BasePage } from '../lib';
 
 export class RegisterPage extends BasePage{
@@ -19,8 +19,8 @@ export class RegisterPage extends BasePage{
             await this.browser.findElement(this.locators.emailInput).sendKeys(pEmail);
             await this.browser.findElement(this.locators.passwordInput).sendKeys(pPassword);
             await this.browser.findElement(this.locators.signUpButton).click();
-    } catch(e) {
-        console.log('SingUp Error:', e);
-    }
+        } catch(e) {
+            console.log(`[SingUp Error] ${e}`);;
+        }
     }
 }

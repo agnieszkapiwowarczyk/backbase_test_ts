@@ -7,7 +7,7 @@
     "tests": "mocha --require ts-node/register test/**/*.ts --timeout 600000"
   },
   "keywords": [],
-  "author": "",
+  "author": "Agnieszka Piwowarczyk",
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.2.21",

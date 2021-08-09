@@ -1,6 +1,6 @@
 import { Locator, WebElement } from 'selenium-webdriver';
 import { Browser } from './browser';
-import { Assertion, expect } from 'chai';
+import { expect } from 'chai';
 
 export interface NewablePage<T extends BasePage> {
     new(browser: Browser): T;
@@ -14,25 +14,47 @@ export abstract class BasePage {
     }
 
     public constructor(protected browser: Browser) {
-
     }
 
     public async navigate(pSelector: Locator): Promise<void> {
-        await this.browser.navigate(this.url);
-        await this.browser.wait(pSelector);
+        try {
+            await this.browser.navigate(this.url);
+            await this.browser.wait(pSelector);
+        } catch(e) {
+            console.log(`[Navigate Error] ${e}`);
+        }
     }
     //Asserts
+    public isEqual(pActual: string, pExpected: string){
+            expect(pActual).to.equal(pExpected);
+    }
+
     public async isVisible(pSelector: Locator, pElementName: string) {
         if (! await this.browser.findElement(pSelector).isDisplayed()){
-            throw new Error(`[assert isVisible] Element ${pElementName} is visible`);
+            throw new Error(`[assert isVisible] Element '${pElementName}' is not visible.`);
+        }
+    }
+//  TO DO: Error
+    public async isNotVisible(pSelector: Locator, pElementName: string) {
+        let element = await this.browser.findElement(pSelector);
+        if (element){
+            throw new Error(`[assert isNotVisible] Element '${pElementName}' is visible.`);
         }
     }
 
     public async textIsAsExpected(pSelector: Locator, pExpected: string) {
         let actual: string = await this.browser.findElement(pSelector).getText();
-        let errorMessage = `The actual value was  ' ${actual} ' rather than the expected '${pExpected}'.`;
         if (actual.trim() !== pExpected.trim()) {
-            throw new Error(`[assert textIsAsExpected]` + errorMessage);
+            let errorMessage = `The actual value was  '${actual}' rather than the expected '${pExpected}'.`;
+            throw new Error(`[assert textIsAsExpected] ${errorMessage}`);
+        }
+    }
+
+    public async attributeIsAsExpected(pSelector: Locator, pAttribute: string,  pExpected: string) {
+        let actual: string = await this.browser.findElement(pSelector).getAttribute(pAttribute);
+        if (actual.trim() !== pExpected.trim()) {
+            let errorMessage = `The actual value atribute '${pAttribute}' was '${actual}' rather than the expected '${pExpected}'.`;
+            throw new Error(`[assert attributeIsAsExpected] ${errorMessage}`);
         }
     }
 
@@ -45,8 +67,8 @@ export abstract class BasePage {
             actual = await element.getText();
             expected = pExpected[i];
             if (actual.trim() !== expected.trim()) {
-                let errorMessage = `The actual value was  ' ${actual} ' rather than the expected '${expected}'.`;
-                throw new Error(`[assert textIsAsExpected]` + errorMessage);
+                let errorMessage = `The actual value was  '${actual}' rather than the expected '${expected}'.`;
+                throw new Error(`[assert textIsAsExpected] ${errorMessage}`);
             }
             i++;
         }       
